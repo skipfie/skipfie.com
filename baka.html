@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+<meta name="keywords" content="baka sound effect, baka instant button, baka button, baka sound, baka tsundere, taiga, tenori taiga, baka online, anime online">
+<meta name="description" content="From many anime they yell baka! This recreates the tsundere baka sound and randomise with a stylish button and live counter">
+<title>Baka! Button Online - skipfie.com</title>
+<link rel="stylesheet" href="w3/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+<style>
+body, h1 {font-family: "Lato", sans-serif}
+body, html {height: 100%}
+.btn {
+    border: none;
+    display: inline-block;
+    outline: 0;
+    padding: 6px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none!important;
+    color: #fff;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+    .btn:active {background-color: #c7c7c7!important}
+    .btn:hover {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)}
+#bgimg {
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+#spinner {
+    background: white;
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+@media only screen 
+and (max-device-width : 480px) {
+    .btn:hover {box-shadow: none; !important}
+    .w3-jumbo {font-size: 50px!important;}
+}
+</style>
+<script src="switch.js?v=3"></script>
+<script>
+var uniqueRandoms = [];
+var numRandoms = 8;
+
+function makeUniqueRandom() {
+    if (!uniqueRandoms.length) {
+        //repopulate array
+        for (var i = 0; i < numRandoms; i++) {
+            uniqueRandoms.push(i);
+        }
+    }
+    var index = Math.floor(Math.random() * uniqueRandoms.length);
+    var val = uniqueRandoms[index];
+    uniqueRandoms.splice(index, 1);
+    return val;
+}
+
+function playSounds() {
+    //randomly select one of the baka noises but uniquely
+    var audioID = document.getElementById("baka"+makeUniqueRandom());
+    if (audioID.paused) {
+        audioID.play();
+    } else {
+        //cloneNode when it is playing so two sounds can be played at once
+        audioID.cloneNode().play();
+    }
+    add();
+}
+
+function blockMove() {
+    event.preventDefault();
+}
+
+$(function(){
+    setTimeout(fallback, 5000);
+    repeatGet();
+});
+
+function fallback() {
+    //if the swap doesn't work, try again in 5s
+    if($('#bgimg').css('display') == 'none') {
+        $.when(swap()).done(function() {
+            showPage();
+        });
+    }
+}
+
+function repeatGet() {
+    getNum().then(function(){
+        setTimeout(repeatGet, 500);
+    });
+}
+
+function add() {
+    $.get('https://jo.waysonline.net/bakaadd/');
+}
+
+function getNum() {
+    return $.get({
+        url: 'https://jo.waysonline.net/bakaget/',
+        cache: false
+    }).done(function(num) {
+        //check if the server's count has caught up to the client, then update the display
+        if (num>$("#bakacounter").text()) {$("#bakacounter").html(num);}
+    }); 
+}
+
+function getOnClick() {
+    //local count to make it look smooth
+    var currentCount = $("#bakacounter").text();
+    currentCount++;
+    $("#bakacounter").html(currentCount);
+}
+
+$(window).keyup(function (e) {
+    //spacebar
+    if (e.which === 32) {
+        //prevent a double trigger
+        e.preventDefault();
+        //click btn
+        $("#bakabutton").trigger("click")
+    }
+});
+</script>
+</head>
+<body onload="swap()" ontouchmove="blockMove">
+    <div class="w3-display-middle w3-center" id="loader">
+        <object data="bgpics/ring-alt.svg" type="image/svg+xml">
+        </object>
+        <p class="w3-center w3-xlarge"><strong>Loading...</strong></p>
+    </div>
+    <div class="w3-display-container w3-animate-opacity w3-text-white" id="bgimg" style="display:none;">
+        
+        <div class="w3-display-topleft w3-padding-large w3-xlarge">
+            <h1><strong>skipfie</strong></h1>
+        </div>
+
+        <div class="w3-display-middle">
+
+            <input class="w3-jumbo w3-center btn w3-round-xlarge w3-white w3-border w3-border-white" 
+                   id="bakabutton" 
+                   onclick="playSounds();getOnClick();" 
+                   type="button" 
+                   value="Baka!!!">
+
+            <br>
+            
+            <div class="w3-jumbo w3-center" 
+                 id="bakacounter" 
+                 style="font-family: 'Roboto Mono', monospace;text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;">
+            </div>
+
+        </div>
+
+        <div class="w3-display-bottomleft w3-padding-large">
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J2QJMCQW3GSVE">Donate</a>
+        </div>
+
+    </div>
+
+    <audio id="baka0" preload="auto" src="sound/00.mp3"></audio>
+    <audio id="baka1" preload="auto" src="sound/01.mp3"></audio> 
+    <audio id="baka2" preload="auto" src="sound/02.mp3"></audio> 
+    <audio id="baka3" preload="auto" src="sound/03.mp3"></audio> 
+    <audio id="baka4" preload="auto" src="sound/04.mp3"></audio> 
+    <audio id="baka5" preload="auto" src="sound/05.mp3"></audio> 
+    <audio id="baka6" preload="auto" src="sound/06.mp3"></audio> 
+    <audio id="baka7" preload="auto" src="sound/07.mp3"></audio>
+
+</body>
+<html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />    
+<meta name=="keywords" content="nyanpassu, nyanpasu anime, nyanpasu online, nyanpasu button, nyanpass, nyanpass button, nyanpass online, nyanpasu sound, nyanpasu, anime free" />
+<meta name="description" content="From the popular anime Non Non Biyori, this webpage houses the nyanpasu button for your enjoyment" />
+<title>Nyanpasu Button Online - skipfie.com</title>
+<link rel="stylesheet" href="w3/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+<style>
+body, h1 {font-family: "Lato", sans-serif}
+body, html {height: 100%}
+.btn {
+    border: none;
+    display: inline-block;
+    outline: 0;
+    padding: 6px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none!important;
+    color: #fff;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.btn:active {background-color: #c7c7c7!important}
+.btn:hover {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)}
+#bgimg {
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+#spinner {
+    background: white;
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+@media only screen 
+and (max-device-width : 570px) {
+    .btn:hover {box-shadow: none; !important}
+    .w3-jumbo {font-size: 50px!important}
+}
+</style>
+<script src="switch.js?v=3"></script>
+<script>
+var roundRobin = 0;
+function play() {
+    if (roundRobin == 2) {this.roundRobin = 0;} 
+    var a = document.getElementById("audio" + roundRobin);
+    if (a.paused) {
+        a.play();
+    } else {
+        a.currentTime = 0;
+    } 
+    if (roundRobin <= 2) {roundRobin++;}
+    add();
+}
+
+function blockMove() {
+    event.preventDefault();
+}
+
+$(function() {
+    repeatGet();
+});
+
+function repeatGet() {
+    getNum().always(function() {
+        setTimeout(repeatGet, 500);
+    });
+}   
+
+function add() {
+    $.get("/nyanadd/");
+}
+
+function getNum() {
+    return $.get({
+        url: "/nyanget/",
+        cache: false
+    }).done(function(num) {
+        var ufnum = $("#nyancounter").text().replace(/,/gi, '');
+        if (num>ufnum) {
+            var ffnum = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $("#nyancounter").html(ffnum);
+        }
+    }); 
+}
+
+$(window).keyup(function(e) {
+    // spacebar
+    if (32 === e.keyCode) {
+            // prevent double trigger
+        $("#nyanbutton").trigger("click");
+    }
+});
+
+function getOnClick() {
+    var currentCount = $("#nyancounter").text();
+    var ufcc = currentCount.replace(/,/gi, '');
+    ufcc++;
+    var fcc = ufcc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    $("#nyancounter").html(fcc);
+}
+</script>
+</head>
+<body onload="swap()" ontouchmove="blockMove()"> 
+<!-- block rubberbanding on mobile -->
+<div id=loader class="w3-display-middle w3-center"> 
+<object type="image/svg+xml" data="bgpics/ring-alt.svg">
+</object>
+<p class="w3-center w3-xlarge"><strong>Loading...</strong></p>
+</div>
+
+<div id="bgimg" style="display:none;" class="w3-display-container w3-animate-opacity w3-text-white">
+<div class="w3-display-topleft w3-padding-large w3-xlarge">
+    <h1><strong>skipfie</strong></h1>
+</div>
+<div class="w3-display-middle">
+<input id="nyanbutton" 
+       class="w3-jumbo w3-center btn w3-round-xlarge w3-white w3-border w3-border-white" 
+       type="button" 
+       value="にゃんぱすー" 
+       onclick="play();getOnClick()">
+<audio id="audio0" src="nyanpass.mp3" preload="auto"></audio>
+<audio id="audio1" src="nyanpass.mp3" preload="auto"></audio>
+<audio id="audio2" src="nyanpass.mp3" preload="auto"></audio>
+<br>
+<div style="font-family: 'Roboto Mono', monospace;text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;" id="nyancounter" class="w3-jumbo w3-center"></div>
+</div>
+<div class="w3-display-bottomleft w3-padding-large">
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J2QJMCQW3GSVE">Donate</a>
+</div>
+
+</div>
+</body>
+</html>
