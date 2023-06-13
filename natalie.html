@@ -42,6 +42,52 @@ and (max-device-width : 480px) {
 <meta name="msapplication-config" content="https://skipfie.com/browserconfig.xml?v=7knjlzoxdk">
 <meta name="theme-color" content="#000000">
 <meta name="application-name" content="skipfie">
+
+<script>
+    const jsonList = [
+                     "You are beautiful inside and out.",
+                     "Your smile brightens up my day.",
+                     "I'm grateful to have you in my life.",
+                     "You inspire me with your kindness and compassion.",
+                     "You are an incredible person, and I admire you.",
+                     "Your presence brings joy and happiness.",
+                     "You are the most amazing person I know.",
+                     "I appreciate everything you do for me.",
+                     "You make every moment special.",
+                     "I love how caring and thoughtful you are.",
+                     "Your intelligence and quick wit always impress me.",
+                     "You have a captivating and irresistible charm.",
+                     "Your determination and drive inspire me to be my best.",
+                     "I love the way you light up a room with your presence.",
+                     "You have a heart of gold and a genuine, caring nature.",
+                     "You have an incredible sense of style and always look stunning.",
+                     "You make me feel loved and cherished every single day.",
+                     "Your laughter is music to my ears and brings so much joy.",
+                     "I admire your strength and resilience in overcoming challenges.",
+                     "You have a way of making everyone around you feel special and valued.",
+                     "I love how you bring out the best in me and encourage me to grow.",
+                     "You have a radiant and infectious energy that uplifts everyone around you.",
+                     "Your support and belief in me mean the world to me.",
+                     "You have an incredible knack for making ordinary moments extraordinary.",
+                     "I'm grateful for your constant love and unwavering presence in my life."
+                     ];
+
+    // Parse JSON string into an array
+    const textList = JSON.parse(jsonList);
+
+    // Get a random index from the array
+    const randomIndex = Math.floor(Math.random() * textList.length);
+
+    // Get the randomly selected string
+    const randomString = textList[randomIndex];
+
+    // Find the <h1> element(s) on the page
+    const h1Elements = document.getElementsByTagName("h1");
+
+    // Set the content of the first <h1> element to the random string
+    h1Elements[1].textContent = randomString;
+</script>
+
 </head>
 
 <body onload="swap()">
@@ -52,22 +98,19 @@ and (max-device-width : 480px) {
     <div id="bgimg" style="display:none;" class="w3-display-container w3-animate-opacity w3-text-white">
         <div class="w3-display-topleft w3-padding-large w3-xlarge">
             <h1>
-                <strong>Joe Li</strong>
+                <strong>natalie</strong>
             </h1>
         </div>
         <div class="w3-display-middle">
-            <h1 class="w3-center w3-jumbo">socials</h1>
+            <h1 class="w3-center w3-jumbo">hehehe</h1>
             <hr class="w3-border-grey" style="margin:auto;width:40%">
             <strong><p class="w3-large w3-center">
-                <a class=btn href="https://www.linkedin.com/in/joeli-/">LinkedIn</a>&nbsp;
-                <a class=btn href="https://www.instagram.com/skipfie/">Instagram</a>&nbsp;
-                <a class=btn href="https://www.snapchat.com/add/qazedc1212">Snapchat</a>&nbsp;
-                <a class=btn href="https://www.facebook.com/profile.php?id=100012355836790">Facebook</a>&nbsp;
-                <a class=btn href="https://twitter.com/skipfie">Twitter</a>&nbsp;
+                <a class=btn href="">spotify</a>&nbsp;
+                <a class=btn href="https://music.youtube.com/playlist?list=PL0PjI304cC3VyNGRXI4kmVSf4K3M1atnd&feature=share">youtube</a>&nbsp;
 	    </p></strong>
         </div>
         <div class="w3-display-bottomleft w3-padding-large">
-            <p>made with \<3</p>
+            <p>made with &lt;3</p>
         </div>
     </div>
 </body>
