@@ -44,7 +44,7 @@ body, html {height: 100%}
 }
 @media only screen 
 and (max-device-width : 480px) {
-    .btn:hover {box-shadow: none; !important}
+    .btn:hover {box-shadow: none!important;}
     .w3-jumbo {font-size: 50px!important;}
 }
 </style>
@@ -103,12 +103,12 @@ function repeatGet() {
 }
 
 function add() {
-    $.get('https://jo.waysonline.net/bakaadd/');
+    $.get('https://skipfie.com/bakaadd/');
 }
 
 function getNum() {
     return $.get({
-        url: 'https://jo.waysonline.net/bakaget/',
+        url: 'https://skipfie.com/bakaget/',
         cache: false
     }).done(function(num) {
         //check if the server's count has caught up to the client, then update the display
